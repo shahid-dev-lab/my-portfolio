@@ -1,0 +1,1342 @@
+/* Base Reset and Variables */
+:root {
+    --primary-color: #967bb6; /* A professional blue */
+    --secondary-color: #967bb6; /* A subtle gray */
+    --text-color: #555;
+    --background-color: #e6e6fa;
+    --light-bg: #e6e6fa;
+    font-family: "Audiowide", sans-serif;
+}
+.audiowide-regular {
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+/* Reusable Container for centering content */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+h1, h2, h3 {
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+/* --- Rounded Profile Photo Style --- */
+
+.profile-photo {
+    width: 110%;
+    max-width: 550px; 
+    height: auto;
+    display: block; 
+    margin: 0 auto; 
+    
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 5px solid #041F28;
+
+    /* Glow */
+    box-shadow: 
+        0 0 15px #041F28,
+        0 0 30px rgba(4, 31, 40, 0.7),
+        0 0 60px rgba(4, 31, 40, 0.5);
+
+    /* Smooth Motion */
+    animation: floatGlow 6s ease-in-out infinite;
+}
+
+/* Floating + Glow Animation */
+@keyframes floatGlow {
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow:
+            0 0 15px #041F28,
+            0 0 30px rgba(4, 31, 40, 0.6),
+            0 0 60px rgba(4, 31, 40, 0.4);
+    }
+
+    50% {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow:
+            0 0 25px #041F28,
+            0 0 50px rgba(4, 31, 40, 0.9),
+            0 0 90px rgba(4, 31, 40, 0.7);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        box-shadow:
+            0 0 15px #041F28,
+            0 0 30px rgba(4, 31, 40, 0.6),
+            0 0 60px rgba(4, 31, 40, 0.4);
+    }
+}
+
+
+/* --- 1. Header and Navigation --- */
+
+.main-header {
+    background-color: var(--light-bg);
+    border-bottom: 1px solid #ccccff;
+    position: sticky; 
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    /* Mobile: Pushes the toggle and the CTA button to opposite ends */
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0; 
+}
+
+/* Hamburger Menu Toggle */
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+}
+
+.menu-toggle .bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-color);
+    border-radius: 1px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+/* Mobile Navigation Setup (Dropdown Menu) */
+.main-nav {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--light-bg);
+    border-top: 1px solid #ccccff;
+    padding: 1rem 0;
+    /* Ensure it doesn't interfere with the CTA button on desktop */
+    z-index: 999; 
+}
+
+.main-nav.is-open {
+    display: block; /* Shown when JS toggles the class */
+}
+
+.main-nav ul {
+    list-style: none;
+    text-align: center;
+    /* Revert to stacking list items vertically for mobile */
+    display: block; 
+}
+
+.main-nav ul li a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #041F28;
+}
+
+.main-nav ul li a:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+/* Contact Button (Visible on all devices, responsive size) */
+.desktop-contact-cta {
+    display: block; /* Always show the button */
+}
+
+.header-cta-btn {
+    padding: 0.5rem 0.8rem; /* Smaller padding for mobile button */
+    font-size: 0.9rem;
+}
+
+
+/* --- Media Queries for Tablet/Desktop (Responsive Design) --- */
+
+@media (min-width: 768px) {
+    .header-content {
+        /* Keep the split layout for Logo/Nav and CTA, but now the nav is visible */
+        justify-content: space-between; 
+    }
+    
+    /* Hide the hamburger toggle on desktop */
+    .menu-toggle {
+        display: none; 
+    }
+    
+    /* Show the main navigation inline and centered */
+    .main-nav {
+        display: flex;
+        position: static; /* Remove absolute positioning */
+        border-top: none;
+        padding: 0;
+        flex-grow: 1; /* Nav takes central space */
+        justify-content: center; /* Centers links within the nav area */
+    }
+
+    .main-nav ul {
+        display: flex; /* Links are horizontal */
+        gap: 1.5rem;
+    }
+
+    .main-nav ul li a {
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+    
+    /* Ensure the button is sized properly for desktop */
+    .header-cta-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    .header-cta-btn:hover {
+    background-color: #a08abb; 
+}
+}
+
+
+/* --- 2. Hero Section (Two-Column Layout) --- */
+
+.hero-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 3rem 0;
+    background: var(--light-bg);
+}
+
+.hero-content-wrapper {
+    /* Mobile: Stack image above text */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; 
+    text-align: center;
+}
+.hero-section h2 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.static-text {
+  color: #041F28;
+  font-family: "Bungee Shade", sans-serif;
+}
+
+.dynamic-text {
+  font-family: "Bungee Shade", sans-serif;
+  color: #041F28;
+  border-right: 2px solid #041F28;
+  padding-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0% { border-color: transparent; }
+  50% { border-color: #041F28; }
+  100% { border-color: transparent; }
+}
+
+
+.hero-text-content {
+    order: 2; /* Text below image on mobile */
+}
+
+.hero-image-content {
+    order: 1; /* Image above text on mobile */
+    text-align: center;
+}
+
+.hero-section .greeting {
+    font-family: "Bungee Shade", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #041F28;
+    margin-bottom: 0.5rem;
+}
+
+.hero-section h1 {
+    font-family: "Bungee Shade", sans-serif;
+    font-size: 3rem;
+    color: #041F28;
+    line-height: 1.1;
+}
+
+.hero-section h2 {
+    font-size: 1.5rem;
+    color: #041F28;
+    margin-bottom: 1.5rem;
+}
+
+.hero-section .tagline {
+    font-size: 1.1rem;
+    font-weight: 500;
+    max-width: 600px;
+    color: #555;
+}
+
+/* Buttons */
+.cta-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 700;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: 2px solid var(--primary-color);
+}
+
+.primary-btn:hover {
+    background-color: #a08abb;
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: #041F28;
+    border: 2px solid var(--primary-color);
+}
+
+.secondary-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+@media (max-width: 768px) {
+    .button {
+        padding: 0.75rem 0.75rem;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: 700;
+    }
+}
+
+/* --- 3. About Section (Two-Column Layout with Lottie) --- */
+
+.section-title {
+    text-align: right;
+    margin-bottom: 2.5rem;
+    font-size: 2rem;
+    color: #041F28 !important;
+}
+
+.about-snapshot-section {
+    padding: 4rem 0;
+    background-color: var(--background-color);
+}
+
+.about-content-wrapper {
+    /* Mobile: Stack content vertically */
+    display: flex;
+    flex-direction: column;
+    gap: 3rem; 
+    text-align: center; 
+}
+
+.about-text-content {
+    order: 2; 
+    color: #967BB6;
+    justify-content: center;
+}
+
+.about-text-content .section-title {
+    text-align: center; 
+    margin-bottom: 1.5rem;
+}
+
+.about-text-content .intro-text {
+    max-width: 100%; 
+    margin: 0 auto 1rem; 
+    font-size: 1.05rem;
+    text-align: left;
+    justify-content: center;
+    color: #555;
+}
+
+.about-image-content {
+    order: 1; /* Images above text on mobile */
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-caption {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-top: 1rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- 4. Skills Showcase Section Styles (Revised for Mobile Centering) --- */
+/* ---------------------------------------------------------------------- */
+
+.skills-showcase-section {
+    padding: 4rem 0;
+    background-color: var(--light-bg);
+}
+
+.skills-layout-wrapper {
+    display: flex; 
+    gap: 60px; /* Space between the two main containers for desktop */
+    align-items: center; 
+    flex-wrap: wrap; 
+}
+
+.image-container {
+    flex: 1 1 45%; 
+    min-width: 300px; 
+    /* Centers the Lottie animation within its container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.skills-container {
+    flex: 1 1 45%; 
+    display: grid;
+    /* This grid handles the overall layout of the skill cards */
+    gap: 1rem; 
+    grid-template-columns: 1fr; 
+    justify-content: space-between;
+}
+
+/* Skill Card Styling */
+.skill-group {
+    background-color: var(--background-color); 
+    padding: 0.5rem; 
+    border-radius: 8px; 
+    box-shadow: 0 0 12px #d9c8ec, 0 0 24px #d9c8ec, 0 0 48px rgb(213, 193, 238); 
+    transition: transform 0.3s ease-in-out;
+    
+    display: grid;
+    grid-template-areas: 
+        "name percent"
+        "track track";
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+
+.skill-logo img {
+    width: 90px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.skill-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-name {
+    font-weight: 500;
+    font-style: italic;
+    color: #041F28;
+}
+
+.skill-percent {
+    font-weight: 500;
+    font-style: italic;
+    color: var(--skill-color, #967BB6);
+}
+
+.skill-bar-track {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.skill-bar-progress {
+    height: 100%;
+    width: 0;
+    border-radius: 5px;
+    transition: width 1.2s ease-out;
+}
+
+
+/* --- Media Queries for Skills Layout (Mobile Centering Fix) --- */
+
+@media (max-width: 768px) {
+    .skills-layout-wrapper {
+        /* STACKED: Items go vertical */
+        flex-direction: column; 
+        /* CENTERED: Center the stacked blocks */
+        align-items: center; 
+        gap: 30px; 
+        flex-wrap: wrap; 
+        overflow-x: hidden; 
+        padding-bottom: 0; 
+    }
+    
+    .image-container,
+    .skills-container {
+        /* FULL WIDTH: Take 100% of the parent container */
+        flex: 1 1 100%; 
+        min-width: initial;
+        max-width: 100%;
+    }
+
+    .skills-container {
+        /* Center the skill list itself and limit max width for neatness on wider phones/small tablets */
+        max-width: 600px; 
+        margin: 0 auto;
+        
+        /* The grid inside the skills container remains single column */
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .skills-container {
+        grid-template-columns: repeat(2, 1fr); /* Tablet/Desktop: 2 columns */
+        gap: 1.5rem; 
+    }
+}
+
+/* --- New Project Section Styles --- */
+
+.projects-showcase-section {
+    padding: 4rem 0;
+    background-color: var(--light-bg); 
+}
+
+/* Filter Tabs Styling (No change from before) */
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.filter-btn:hover {
+    background-color: var(--background-color);
+    border-color: var(--primary-color);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Project Grid Layout - MODIFIED FOR 2x2 ON MOBILE */
+.project-grid {
+    display: grid;
+    /* MOBILE-FIRST: 2 columns for all small screens (2x2 layout) */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1rem; /* Reduced gap for small screens */
+    padding: 0 1rem; /* Added horizontal padding to prevent cards touching edges */
+}
+
+/* Project Card Styling (No change from before) */
+.project-card {
+    background-color: var(--background-color);
+    border-radius: 10px;
+    overflow: hidden; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.project-card.hidden {
+    display: none; 
+}
+
+.project-img {
+    width: 100%;
+    height: 120px; /* Reduced height to save space on mobile */
+    object-fit: cover;
+    display: block;
+}
+
+.card-content {
+    padding: 1rem; /* Reduced padding to save space on mobile */
+}
+
+.card-content h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #041F28;
+}
+
+.project-description {
+    margin: 0.5rem 0 0.75rem;
+    font-size: 0.75rem; /* Reduced font size for mobile readability */
+    color: #555;
+}
+
+/* Tech Tags */
+.tech-stack {
+    margin-bottom: 0.5rem;
+}
+
+.tech-tag {
+    display: inline-block;
+    padding: 0.2rem 0.4rem;
+    margin-right: 0.3rem;
+    margin-bottom: 0.3rem;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    background-color: #967BB6; 
+    color: white;
+}
+
+/* Project Links */
+.project-links {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.small-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+}
+
+
+/* --- Media Queries for Project Grid (Responsive) --- */
+
+@media (min-width: 600px) {
+    .project-grid {
+        /* Tablet: Keep 2 columns, but with larger gap and padding */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 0;
+    }
+
+    .project-img {
+        height: 200px; /* Restore taller height for better screens */
+    }
+    
+    .card-content {
+        padding: 1.5rem; /* Restore larger padding */
+    }
+
+    .project-description {
+        font-size: 0.95rem; /* Restore font size */
+    }
+
+    .tech-tag {
+        font-size: 0.8rem;
+    }
+
+    .small-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .project-grid {
+        /* Desktop: 3 columns */
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+}
+.project-description {
+    margin: 0.5rem 0 0.75rem;
+    font-size: 0.75rem; 
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.card-content h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.load-more-container {
+    text-align: center;   /* Center child inline-block elements */
+    margin: 2rem 0;       /* Space above and below */
+    width: 100%;
+}
+
+#load-more-btn {
+    display: inline-block; /* Needed for text-align:center to work */
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#load-more-btn:hover {
+    background-color: #967BB6; /* darker shade */
+}
+
+
+
+/* --- 5. Project Gallery Section Styles (FULL-WIDTH AUTO-CAROUSEL) --- */
+
+.project-gallery-section {
+    padding: 4rem 0 4rem 0; /* Adjust padding if needed */
+    background-color: var(--background-color); 
+    overflow: hidden; /* Necessary to prevent horizontal scrollbar flicker */
+}
+
+/* New wrapper ensures content spans the full viewport width */
+.carousel-full-width-wrapper {
+    width: 100vw; /* Full viewport width */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw; /* Pulls element to the left edge */
+    margin-right: -50vw; /* Pulls element to the right edge */
+    overflow: hidden;
+    padding: 2rem 0; /* Add vertical padding around the carousel track */
+}
+
+/* This is the container that holds the track */
+.carousel-container {
+    /* Use padding to keep content slightly off the viewport edges */
+    padding: 0 1rem; 
+}
+
+/* This is the track that moves */
+.gallery-grid.carousel-track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1.5rem; /* Larger gap looks cleaner on full-width displays */
+    padding: 0;
+    margin: 0;
+    
+    /* Key for smooth animation */
+    transition: transform 0.5s linear; 
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: default; /* No hover effect since it auto-plays */
+    
+    /* Mobile: 2 items visible */
+    flex: 0 0 calc(50% - 0.75rem); 
+}
+
+.gallery-img {
+    width: 100%;
+    height: 200px; /* Use a consistent, slightly larger height */
+    object-fit: cover;
+    display: block;
+}
+
+/* Remove hover effects on images/overlays for auto-carousel */
+.gallery-item:hover {
+    transform: none; 
+}
+.gallery-item:hover .gallery-img, .overlay {
+    opacity: 1; 
+}
+.overlay {
+    display: none; /* Hide the text overlay for a cleaner, fast-moving gallery */
+}
+
+/* --- 6. Contact Section Styles --- */
+.contact-section {
+    padding: 4rem 1rem;
+    background-color: #E6E6FA;
+}
+
+.contact-content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #041F28;
+    margin-bottom: 0.5rem;
+}
+
+.intro-text {
+    text-align: center;
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Flex Wrapper */
+.contact-flex-wrapper {
+    display: flex;
+    gap: 10rem;
+    flex-wrap: wrap;
+}
+
+/* Left Form */
+.contact-left {
+    flex: 1 1 500px;
+    background: #E6E6FA;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Right Info */
+.contact-right {
+    flex: 1 1 400px;
+    background: #E6E6FA;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.contact-right h3 {
+    margin-top: 0;
+    color: #041F28;
+    margin-bottom: 1rem;
+}
+
+.contact-right p {
+    color: #041F28;
+    margin-bottom: 0.75rem;
+}
+
+.contact-right a {
+    color: #3f99ee;
+    text-decoration: none;
+}
+
+.contact-right a:hover {
+    text-decoration: underline;
+}
+.contact-right a[href^="tel"] {
+    color: #3f99ee;
+    text-decoration: none;
+}
+
+.contact-right a[href^="tel"]:hover {
+    text-decoration: underline;
+}
+
+
+/* Map Container */
+.map-container {
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Form Fields */
+.contact-left form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.contact-left form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #041F28;
+}
+
+.contact-left form label span {
+    color: #e74c3c;
+}
+
+.contact-left form input,
+.contact-left form textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: #fdfdfd;
+}
+
+.contact-left form input:focus,
+.contact-left form textarea:focus {
+    border-color: #967BB6;
+    box-shadow: 0 0 5px rgba(150,123,182,0.3);
+    outline: none;
+}
+
+.contact-left form textarea {
+    resize: vertical;
+}
+
+.contact-left form .button.primary-btn {
+    display: inline-block;
+    background-color: #967BB6;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-left form .button.primary-btn:hover {
+    background-color: #7a5fa5;
+    transform: translateY(-2px);
+}
+
+.form-success {
+    color: #2ecc71;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.form-error {
+    color: #e74c3c;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .contact-flex-wrapper {
+        flex-direction: column;
+    }
+}
+
+
+
+
+/* REMOVED: All .carousel-nav, .prev, and .next styles */
+
+
+/* --- Media Queries for Gallery Grid (Item Sizing) --- */
+
+@media (min-width: 600px) {
+    .gallery-item {
+        /* Tablet: 3 items visible */
+        flex: 0 0 calc(33.333% - 1rem); 
+    }
+}
+
+@media (min-width: 1024px) {
+    .gallery-item {
+        /* Desktop: 4 items visible */
+        flex: 0 0 calc(25% - 1.125rem); 
+    }
+}
+
+@media (min-width: 1200px) {
+    .gallery-item {
+        /* Large Desktop: 5 items visible */
+        flex: 0 0 calc(20% - 1.2rem); 
+    }
+}
+
+/* --- 5. Footer --- */
+
+.main-footer {
+    background-color: #967BB6;
+    color: white;
+    padding: 2rem 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.social-links a {
+    color: white;
+    margin: 0 0.75rem;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #041F28;
+}
+
+/* --- Media Queries for Tablet/Desktop (Responsive Design) --- */
+
+@media (min-width: 768px) {
+    /* Header - show nav inline on larger screens */
+    .menu-toggle {
+        display: none; 
+    }
+    
+    .main-nav {
+        display: block;
+        position: static;
+        border-top: none;
+        padding: 0;
+    }
+
+    .main-nav ul {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .main-nav ul li a {
+        padding: 0.5rem;
+    }
+
+    /* Hero Section - Two Columns */
+    .hero-content-wrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr; /* Text content gets more space */
+        align-items: center;
+        text-align: left;
+        gap: 3rem;
+    }
+    
+    .hero-text-content {
+        order: 1; /* Text on the left */
+        text-align: left; 
+    }
+
+    .hero-image-content {
+        order: 2; /* Image on the right */
+    }
+
+    .cta-group {
+        justify-content: flex-start; /* Align buttons left */
+    }
+
+    .hero-section h1 {
+        font-size: 4rem;
+    }
+
+    .hero-section h2 {
+        font-size: 2rem;
+    }
+
+    /* About Section - Two Columns */
+    .about-content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        align-items: center;
+        text-align: left; 
+        gap: 4rem; 
+    }
+
+    .about-text-content {
+        order: 1; /* Text on the left */
+    }
+
+    .about-text-content .section-title {
+        text-align: left; /* Align title left */
+    }
+
+    .about-text-content .intro-text {
+        margin: 0 0 1rem 0; /* Adjust margins for left alignment */
+    }
+
+    .about-image-content {
+        order: 2; /* Animation on the right */
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Skills */
+    .skill-cards {
+        grid-template-columns: repeat(2, 1fr); /* Tablet: 2 columns */
+    }
+    
+    /* Footer */
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 1024px) {
+    /* Hero */
+    .hero-section h1 {
+        font-size: 5rem;
+    }
+
+    /* Skills */
+    .skill-cards {
+        grid-template-columns: repeat(3, 1fr); /* Desktop: 3 columns */
+    }
+}
+
+/* ===================================================== */
+/* 🔥 GLOBAL MOBILE-FIRST FIXES */
+/* ===================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Remove fixed offsets that break mobile */
+#load-more-btn {
+  left: auto !important;
+  margin: 0 auto;
+}
+
+/* ===================================================== */
+/* 📱 MOBILE (0px – 767px) */
+/* ===================================================== */
+@media (max-width: 767px) {
+
+  /* ---------- HEADER ---------- */
+  .header-content {
+    padding: 0.75rem 0;
+  }
+
+  .main-nav ul li a {
+    font-size: 1rem;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero-section {
+    min-height: auto;
+    padding: 2.5rem 0;
+  }
+
+  .hero-content-wrapper {
+    text-align: center;
+  }
+
+  .hero-section h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .hero-section .tagline {
+    font-size: 0.95rem;
+    margin: 0 auto;
+  }
+
+  .profile-photo {
+    width: 90%;
+    max-width: 320px;
+  }
+
+  .cta-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-snapshot-section {
+    padding: 3rem 0;
+  }
+
+  .about-text-content .intro-text {
+    font-size: 0.95rem;
+    text-align: left;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-showcase-section {
+    padding: 3rem 0;
+  }
+
+  .skills-layout-wrapper {
+    gap: 2rem;
+    padding-bottom: 20px;
+  }
+
+  .skills-container {
+    max-width: 100%;
+  }
+
+  .skill-group {
+    padding: 0.55rem;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .skill-logo img {
+    width: 90px;
+    height: 80px;
+    object-fit: contain;
+    position: relative !important;
+    right: 50px !important;
+}
+.skill-info{
+    position: relative !important;
+    left: 50px !important;
+}
+
+  /* ---------- PROJECT GRID ---------- */
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .project-img {
+    height: 100px;
+  }
+
+  .card-content h3 {
+    font-size: 0.7rem;
+  }
+
+  .project-description {
+    font-size: 0.65rem;
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-item {
+    flex: 0 0 calc(50% - 0.75rem);
+  }
+
+  .gallery-img {
+    height: 110px;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-flex-wrapper {
+    gap: 2rem;
+  }
+
+  .contact-left,
+  .contact-right {
+    padding: 1.5rem;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer-content {
+    gap: 1.2rem;
+  }
+}
+
+
+/* ===================================================== */
+/* 📱📲 TABLET (768px – 1023px) */
+/* ===================================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+
+  /* ---------- HERO ---------- */
+  .hero-section h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .profile-photo {
+    max-width: 420px;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-content-wrapper {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .project-img {
+    height: 180px;
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-item {
+    flex: 0 0 calc(33.333% - 1rem);
+  }
+
+  .gallery-img {
+    height: 190px;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-flex-wrapper {
+    gap: 4rem;
+  }
+}
